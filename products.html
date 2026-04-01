@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Products — VVV Traders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       CSS VARIABLES & RESET
+    ============================================ */
+    :root {
+      --green-dark:   #2d5a27;
+      --green-main:   #3a7a30;
+      --green-mid:    #4c9a40;
+      --green-light:  #e8f5e3;
+      --green-pale:   #f0f8ed;
+      --gold:         #c9a84c;
+      --gold-light:   #f5edda;
+      --beige-bg:     #f5f0e8;
+      --beige-mid:    #ede8dd;
+      --beige-dark:   #d9d0bc;
+      --cream:        #faf8f4;
+      --white:        #ffffff;
+      --text-dark:    #1a1a14;
+      --text-mid:     #3d3d30;
+      --text-muted:   #7a7a6a;
+      --text-light:   #aaaaa0;
+      --border:       #e4ddd0;
+      --shadow-sm:    0 2px 12px rgba(0,0,0,0.07);
+      --shadow-md:    0 6px 28px rgba(0,0,0,0.11);
+      --shadow-lg:    0 16px 48px rgba(0,0,0,0.14);
+      --r-sm:         10px;
+      --r-md:         14px;
+      --r-lg:         24px;
+      --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font-display: 'Playfair Display', serif;
+      --font-serif:   'Cormorant Garamond', serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      padding: 18px 0;
+      transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+    }
+    .navbar.scrolled {
+      background: rgba(250,248,244,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.09);
+      padding: 12px 0;
+    }
+    .navbar.scrolled .logo-text { color: var(--text-dark); }
+    .navbar.scrolled .nav-links li a { color: var(--text-mid); }
+    .navbar.scrolled .nav-links li a:hover { color: var(--green-main); }
+    .navbar.scrolled .hamburger { color: var(--text-dark); }
+    .navbar.scrolled .lang-toggle {
+      background: rgba(58,122,48,0.08);
+      border-color: rgba(58,122,48,0.25);
+    }
+    .navbar.scrolled .lang-btn { color: var(--text-muted); }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .logo-badge {
+      background: var(--green-main);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      transition: color var(--transition);
+    }
+    .navbar.scrolled .logo-text { color: var(--text-dark); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      margin-left: auto;
+    }
+    .nav-links li a {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.88);
+      transition: color var(--transition);
+    }
+    .nav-links li a:hover { color: var(--white); }
+    .navbar.scrolled .nav-links li a { color: var(--text-mid); }
+    .navbar.scrolled .nav-links li a:hover { color: var(--green-main); }
+    .nav-links li a.active {
+      font-weight: 700;
+      position: relative;
+      color: var(--white);
+    }
+    .navbar.scrolled .nav-links li a.active { color: var(--green-main); }
+    .nav-links li a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+    }
+    .navbar.scrolled .nav-links li a.active::after { background: var(--green-main); }
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 22px;
+      background: var(--green-main);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background var(--transition), transform 0.15s;
+      flex-shrink: 0;
+    }
+    .nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      color: var(--white);
+      cursor: pointer;
+      margin-left: auto;
+    }
+    .navbar.scrolled .hamburger { color: var(--text-dark); }
+    .nav-close {
+      display: none;
+      position: absolute;
+      top: 24px; right: 24px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    /* ===== LANGUAGE TOGGLE ===== */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 3px;
+      flex-shrink: 0;
+      backdrop-filter: blur(6px);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .lang-btn {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 13px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: transparent;
+      color: rgba(255,255,255,0.65);
+      transition: all 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .navbar.scrolled .lang-toggle {
+      background: rgba(58,122,48,0.08);
+      border-color: rgba(58,122,48,0.25);
+    }
+    .navbar.scrolled .lang-btn { color: var(--text-muted); }
+    .lang-btn.active {
+      background: var(--green-main);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(58,122,48,0.35);
+    }
+
+    /* ============================================
+       PAGE HEADER — matches home hero dark theme
+    ============================================ */
+    .page-header {
+      position: relative;
+      min-height: 72vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      transform: scale(1.04);
+      transition: transform 8s ease;
+    }
+    .page-header:hover .hero-bg { transform: scale(1.0); }
+    .page-header-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(10,20,6,0.82) 0%,
+        rgba(20,40,12,0.68) 50%,
+        rgba(30,50,15,0.45) 100%
+      );
+      z-index: 1;
+    }
+    .page-header-inner {
+      position: relative;
+      z-index: 2;
+      padding: 160px 0 80px;
+      animation: fadeUp 0.7s 0.1s both;
+    }
+    .page-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(168,217,143,0.9);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .page-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 2px;
+      background: rgba(168,217,143,0.9);
+      border-radius: 2px;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.08;
+      margin-bottom: 18px;
+    }
+    .page-header h1 em {
+      font-style: italic;
+      color: #a8d98f;
+    }
+    .page-header-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.72);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .header-stats-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .h-stat { display: flex; flex-direction: column; gap: 3px; }
+    .h-stat strong {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .h-stat span { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; }
+    .h-stat-divider { width: 1px; background: rgba(255,255,255,0.2); align-self: stretch; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       MAIN PRODUCTS SECTION
+    ============================================ */
+    .products-section { padding: 72px 0 100px; background: var(--cream); }
+
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+      align-items: center;
+    }
+    .filter-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: 1.5px solid var(--green-main);
+      background: transparent;
+      color: var(--green-dark);
+      cursor: pointer;
+      transition: all var(--transition);
+      letter-spacing: 0.02em;
+    }
+    .filter-btn:hover { background: var(--green-light); transform: translateY(-1px); }
+    .filter-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--green-dark);
+      box-shadow: 0 4px 16px rgba(201,168,76,0.32);
+      transform: translateY(-1px);
+    }
+    .filter-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px; height: 20px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 800;
+      margin-left: 4px;
+    }
+    .filter-btn.active .filter-count { background: rgba(45,90,39,0.18); }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    /* Category section headers */
+    .cat-section-header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 0 4px;
+    }
+    .cat-section-header h3 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+      white-space: nowrap;
+    }
+    .cat-section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .cat-section-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Product Card */
+    .p-card {
+      background: var(--white);
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .p-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease,
+                  box-shadow var(--transition), border-color var(--transition);
+    }
+    .p-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--green-mid);
+    }
+    .p-card-img {
+      height: 190px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .p-card-img img { height: 100%; transition: transform 0.55s ease; }
+    .p-card:hover .p-card-img img { transform: scale(1.07); }
+    .p-card-img-placeholder {
+      height: 190px;
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .p-card-img-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%);
+    }
+    .placeholder-icon {
+      font-size: 52px;
+      opacity: 0.55;
+      filter: grayscale(0.3);
+      transition: transform 0.4s ease;
+    }
+    .p-card:hover .placeholder-icon { transform: scale(1.12) rotate(-3deg); }
+    .p-card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .p-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .p-card-name {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.25;
+      flex: 1;
+    }
+    .p-card-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--green-pale);
+      color: var(--green-dark);
+      padding: 4px 9px;
+      border-radius: 50px;
+      border: 1px solid rgba(58,122,48,0.15);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .p-card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; }
+    .p-card-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--beige-mid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .p-card-moq { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+    .p-card-moq strong { color: var(--text-mid); font-weight: 700; }
+    .btn-outline-green {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 50px;
+      border: 1.5px solid var(--green-main);
+      background: transparent;
+      color: var(--green-dark);
+      cursor: pointer;
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+    .btn-outline-green:hover { background: var(--green-main); color: var(--white); }
+
+    /* No products */
+    .no-products {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 72px 24px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .no-products-icon { font-size: 40px; margin-bottom: 12px; }
+
+    /* CTA Banner */
+    .cta-banner {
+      margin-top: 64px;
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-main) 100%);
+      border-radius: var(--r-lg);
+      padding: 52px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .cta-banner-text { position: relative; z-index: 1; }
+    .cta-banner-text p {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 10px;
+    }
+    .cta-banner-text h3 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .cta-banner-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .btn-cta-white {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 50px;
+      border: none;
+      background: var(--white);
+      color: var(--green-dark);
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+    }
+    .btn-cta-white:hover { background: var(--beige-bg); transform: translateY(-2px); }
+    .btn-cta-outline {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 13px 28px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      background: transparent;
+      color: var(--white);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-cta-outline:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    .footer { background: var(--text-dark); padding: 64px 0 0; }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .footer-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .footer-brand .logo-text { color: var(--white); font-size: 20px; }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 280px; }
+    .footer-links h5 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 18px;
+    }
+    .footer-links ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links li a { font-size: 14px; color: rgba(255,255,255,0.65); transition: color 0.2s; }
+    .footer-links li a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+    /* ============================================
+       MODAL DRAWER
+    ============================================ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,6,0.55);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal-drawer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 10001;
+      background: var(--white);
+      border-radius: 24px 24px 0 0;
+      padding: 32px 28px 40px;
+      max-height: 92vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .modal-drawer.open { transform: translateY(0); }
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: var(--beige-dark);
+      border-radius: 4px;
+      margin: 0 auto 28px;
+    }
+    .modal-product-name {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 4px;
+    }
+    .modal-product-cat {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+    .modal-form-group { margin-bottom: 16px; }
+    .modal-form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+    .modal-form-group input,
+    .modal-form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--beige-dark);
+      border-radius: var(--r-sm);
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--text-dark);
+      background: var(--cream);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: vertical;
+    }
+    .modal-form-group input:focus,
+    .modal-form-group textarea:focus {
+      border-color: var(--green-main);
+      box-shadow: 0 0 0 3px rgba(58,122,48,0.1);
+    }
+    .modal-form-group input.error,
+    .modal-form-group textarea.error {
+      border-color: #c0392b;
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+    }
+    .modal-submit {
+      width: 100%;
+      padding: 16px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      background: var(--green-main);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-top: 8px;
+    }
+    .modal-submit:hover { background: var(--green-dark); }
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      background: var(--beige-bg);
+      border: none;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition);
+    }
+    .modal-close:hover { background: var(--beige-mid); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--green-dark);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 50px;
+      box-shadow: var(--shadow-lg);
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 768px) {
+      .navbar { padding: 14px 0; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(26,26,20,0.97);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        z-index: 9998;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links.open .nav-close { display: block; }
+      .nav-links li a { font-size: 20px; color: var(--white) !important; }
+      .nav-cta { display: none; }
+      .hamburger { display: block; }
+
+      .page-header { min-height: 60vh; }
+      .page-header-inner { padding: 120px 0 56px; }
+      .page-header h1 { font-size: clamp(36px, 9vw, 56px); }
+      .header-stats-row { gap: 20px; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+      .cta-banner { padding: 40px 28px; flex-direction: column; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .modal-drawer { border-radius: 20px 20px 0 0; padding: 28px 20px 32px; }
+    }
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .filter-bar { gap: 8px; }
+      .filter-btn { font-size: 12px; padding: 9px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-badge">VVV</span>
+        <span class="logo-text">TRADERS</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <button class="nav-close" id="navClose" aria-label="Close menu">&#215;</button>
+        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+        <li><a href="products.html" class="active" data-i18n="nav_products">Products</a></li>
+        <li><a href="index.html#popular" data-i18n="nav_about">About</a></li>
+        <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+
+      <!-- Language Toggle -->
+      <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnTA" onclick="setLang('ta')">தமிழ்</button>
+      </div>
+
+      <button class="nav-cta" onclick="openModal('General Inquiry', '')" data-i18n="nav_cta">Get Quote</button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE HEADER ===== -->
+  <header class="page-header">
+    <img class="hero-bg" src="products_cover.png" alt="Warehouse with grain sacks" />
+    <div class="page-header-overlay"></div>
+    <div class="container" style="width:100%; position:relative; z-index:2;">
+      <div class="page-header-inner">
+        <p class="page-eyebrow" data-i18n="page_eyebrow">VVV Traders — Premium Export Grade</p>
+        <h1>Our <em data-i18n="page_title_em">Products</em></h1>
+        <p class="page-header-sub" data-i18n="page_subtitle">Premium Export-Quality Pulses &amp; Grains — Sourced directly from farms, cleaned, sorted &amp; ready for bulk delivery.</p>
+        <div class="header-stats-row">
+          <div class="h-stat"><strong>20+</strong><span data-i18n="stat_products_label">Products</span></div>
+          <div class="h-stat-divider"></div>
+          <div class="h-stat"><strong>6</strong><span data-i18n="stat_categories_label">Categories</span></div>
+          <div class="h-stat-divider"></div>
+          <div class="h-stat"><strong data-i18n="stat_export_label">Export</strong><span data-i18n="stat_export_sub">Ready Quality</span></div>
+          <div class="h-stat-divider"></div>
+          <div class="h-stat"><strong data-i18n="stat_bulk_label">Bulk</strong><span data-i18n="stat_bulk_sub">MOQ Available</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== PRODUCTS SECTION ===== -->
+  <section class="products-section">
+    <div class="container">
+
+      <!-- Filter Buttons -->
+      <div class="filter-bar" id="filterBar">
+        <span class="filter-label" data-i18n="filter_label">Filter:</span>
+        <button class="filter-btn active" data-filter="All">
+          <span data-i18n="filter_all">All Products</span> <span class="filter-count" id="count-all">20</span>
+        </button>
+        <button class="filter-btn" data-filter="Split Dals">
+          <span data-i18n="filter_split">Split Dals</span> <span class="filter-count" id="count-split">5</span>
+        </button>
+        <button class="filter-btn" data-filter="Whole Pulses">
+          <span data-i18n="filter_whole">Whole Pulses</span> <span class="filter-count" id="count-whole">6</span>
+        </button>
+        <button class="filter-btn" data-filter="Beans & Specialty">
+          <span data-i18n="filter_beans">Beans &amp; Specialty</span> <span class="filter-count" id="count-beans">4</span>
+        </button>
+        <button class="filter-btn" data-filter="Grains">
+          <span data-i18n="filter_grains">Grains</span> <span class="filter-count" id="count-grains">2</span>
+        </button>
+        <button class="filter-btn" data-filter="Rice">
+          <span data-i18n="filter_rice">Rice</span> <span class="filter-count" id="count-rice">3</span>
+        </button>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <div class="no-products" id="noProducts">
+          <div class="no-products-icon">🔍</div>
+          <span data-i18n="no_products">No products found in this category.</span>
+        </div>
+      </div>
+
+      <!-- CTA Banner -->
+      <div class="cta-banner">
+        <div class="cta-banner-text">
+          <p data-i18n="cta_eyebrow">Bulk Wholesale &amp; Export</p>
+          <h3 data-i18n="cta_title">Need Custom Quantities?<br />Let's Talk Pricing.</h3>
+        </div>
+        <div class="cta-banner-actions">
+          <button class="btn-cta-white" onclick="openModal('General Inquiry', '')" data-i18n="cta_quote">Get a Quote</button>
+          <a href="tel:9443394930" class="btn-cta-outline" data-i18n="cta_call">☎ Call Now</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="logo-badge">VVV</span>
+            <span class="logo-text">TRADERS</span>
+          </div>
+          <p data-i18n="footer_brand_desc">Premium quality pulses, rice, and grains. Direct from source. Trusted by businesses across India.</p>
+        </div>
+        <div class="footer-links">
+          <h5 data-i18n="footer_products_heading">Products</h5>
+          <ul>
+            <li><a href="products.html" data-i18n="footer_split">Split Dals</a></li>
+            <li><a href="products.html" data-i18n="footer_whole">Whole Pulses</a></li>
+            <li><a href="products.html" data-i18n="footer_beans">Beans &amp; Specialty</a></li>
+            <li><a href="products.html" data-i18n="footer_grains_rice">Grains &amp; Rice</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h5 data-i18n="footer_company_heading">Company</h5>
+          <ul>
+            <li><a href="index.html" data-i18n="footer_home">Home</a></li>
+            <li><a href="index.html#popular" data-i18n="footer_why">Why Us</a></li>
+            <li><a href="index.html#contact" data-i18n="footer_contact">Contact</a></li>
+            <li><a href="index.html#contact" data-i18n="footer_export">Export Inquiry</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">&copy; 2025 VVV Traders. All rights reserved.</p>
+        <p data-i18n="footer_tagline">Bulk Rice · Pulses · Millets · Export Grade</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Enquiry Modal Drawer -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
+  <div class="modal-drawer" id="modalDrawer">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal()">&#215;</button>
+    <div class="modal-product-name" id="modalProductName">Product Name</div>
+    <div class="modal-product-cat" id="modalProductCat">Category</div>
+    <div class="modal-form-group">
+      <label data-i18n="form_name">Your Name</label>
+      <input type="text" data-i18n-placeholder="placeholder_name" placeholder="Full name" id="mName" />
+    </div>
+    <div class="modal-form-group">
+      <label data-i18n="form_phone">Phone Number</label>
+      <input type="tel" data-i18n-placeholder="placeholder_phone" placeholder="Your contact number" id="mPhone" />
+    </div>
+    <div class="modal-form-group">
+      <label data-i18n="modal_qty_label">Quantity Required</label>
+      <input type="text" data-i18n-placeholder="modal_qty_placeholder" placeholder="e.g. 5 tonnes / 500 kg" id="mQty" />
+    </div>
+    <div class="modal-form-group">
+      <label data-i18n="modal_notes_label">Additional Notes</label>
+      <textarea rows="3" data-i18n-placeholder="modal_notes_placeholder" placeholder="Delivery location, grade preference..." id="mNote"></textarea>
+    </div>
+    <button class="modal-submit" onclick="submitEnquiry()">
+      <span data-i18n="modal_submit_prefix">Send Enquiry for</span> <span id="modalBtnName"></span>
+    </button>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+  /* =====================================================
+     TRANSLATIONS
+  ===================================================== */
+  const translations = {
+    en: {
+      nav_home: "Home",
+      nav_products: "Products",
+      nav_about: "About",
+      nav_contact: "Contact",
+      nav_cta: "Get Quote",
+      page_eyebrow: "VVV Traders — Premium Export Grade",
+      page_title_em: "Products",
+      page_subtitle: "Premium Export-Quality Pulses & Grains — Sourced directly from farms, cleaned, sorted & ready for bulk delivery.",
+      stat_products_label: "Products",
+      stat_categories_label: "Categories",
+      stat_export_label: "Export",
+      stat_export_sub: "Ready Quality",
+      stat_bulk_label: "Bulk",
+      stat_bulk_sub: "MOQ Available",
+      filter_label: "Filter:",
+      filter_all: "All Products",
+      filter_split: "Split Dals",
+      filter_whole: "Whole Pulses",
+      filter_beans: "Beans & Specialty",
+      filter_grains: "Grains",
+      filter_rice: "Rice",
+      no_products: "No products found in this category.",
+      cta_eyebrow: "Bulk Wholesale & Export",
+      cta_title: "Need Custom Quantities?<br />Let's Talk Pricing.",
+      cta_quote: "Get a Quote",
+      cta_call: "☎ Call Now",
+      footer_brand_desc: "Premium quality pulses, rice, and grains. Direct from source. Trusted by businesses across India.",
+      footer_products_heading: "Products",
+      footer_split: "Split Dals",
+      footer_whole: "Whole Pulses",
+      footer_beans: "Beans & Specialty",
+      footer_grains_rice: "Grains & Rice",
+      footer_company_heading: "Company",
+      footer_home: "Home",
+      footer_why: "Why Us",
+      footer_contact: "Contact",
+      footer_export: "Export Inquiry",
+      footer_copy: "© 2025 VVV Traders. All rights reserved.",
+      footer_tagline: "Bulk Rice · Pulses · Millets · Export Grade",
+      form_name: "Your Name",
+      form_phone: "Phone Number",
+      modal_qty_label: "Quantity Required",
+      modal_notes_label: "Additional Notes",
+      modal_submit_prefix: "Send Enquiry for",
+      modal_submit: "Send Enquiry",
+      placeholder_name: "Full name",
+      placeholder_phone: "Your contact number",
+      modal_qty_placeholder: "e.g. 5 tonnes / 500 kg",
+      modal_notes_placeholder: "Delivery location, grade preference...",
+      card_view_details: "View Details",
+      card_cleaned: "Cleaned & Sorted · Export Ready",
+      toast_success: "✓ Enquiry sent! We'll contact you shortly.",
+      toast_error: "Please fill in Name and Phone to continue.",
+      product_toor_dal: "Toor Dal",
+      product_urad_dal: "Urad Dal",
+      product_moong_dal: "Moong Dal",
+      product_masoor_dal: "Masoor Dal",
+      product_chana_dal: "Chana Dal",
+      product_green_gram: "Green Gram",
+      product_black_gram: "Black Gram",
+      product_red_lentils: "Red Lentils",
+      product_bengal_gram: "Bengal Gram",
+      product_horse_gram: "Horse Gram",
+      product_field_beans: "Field Beans",
+      product_kidney_beans: "Kidney Beans",
+      product_black_chickpeas: "Black Chickpeas",
+      product_white_chickpeas: "White Chickpeas",
+      product_peas: "Peas",
+      product_wheat: "Wheat",
+      product_maize: "Maize",
+      product_basmati_rice: "Basmati Rice",
+      product_steam_rice: "Steam Rice",
+      product_raw_rice: "Raw Rice",
+      alt_arhar: "Arhar Dal",
+      alt_split_black: "Split Black",
+      alt_yellow_split: "Yellow Split",
+      alt_red_lentil: "Red Lentil",
+      alt_bengal_gram: "Bengal Gram",
+      alt_whole_moong: "Whole Moong",
+      alt_whole_urad: "Whole Urad",
+      alt_whole_masoor: "Whole Masoor",
+      alt_whole_chana: "Whole Chana",
+      alt_kulthi: "Kulthi",
+      alt_broad_beans: "Broad Beans",
+      alt_rajma: "Rajma",
+      alt_kala_chana: "Kala Chana",
+      alt_kabuli_chana: "Kabuli Chana",
+      alt_green_dry: "Green/Dry",
+      alt_sharbati: "Sharbati",
+      alt_yellow_corn: "Yellow Corn",
+      alt_export_grade: "Export Grade",
+      alt_boiled_rice: "Boiled Rice",
+      alt_sona_masoori: "Sona Masoori",
+    },
+    ta: {
+      nav_home: "முகப்பு",
+      nav_products: "தயாரிப்புகள்",
+      nav_about: "எங்களை பற்றி",
+      nav_contact: "தொடர்பு",
+      nav_cta: "விலை பெறுக",
+      page_eyebrow: "VVV Traders — உயர்தர ஏற்றுமதி",
+      page_title_em: "தயாரிப்புகள்",
+      page_subtitle: "உயர்தர ஏற்றுமதி பருப்பு & தானியங்கள் — விவசாயிகளிடமிருந்து நேரடியாக, சுத்தம் செய்யப்பட்டு, மொத்த டெலிவரிக்கு தயார்.",
+      stat_products_label: "தயாரிப்புகள்",
+      stat_categories_label: "வகைகள்",
+      stat_export_label: "ஏற்றுமதி",
+      stat_export_sub: "தயார் தரம்",
+      stat_bulk_label: "மொத்தம்",
+      stat_bulk_sub: "குறைந்தபட்ச அளவு",
+      filter_label: "வடிகட்டு:",
+      filter_all: "அனைத்து தயாரிப்புகள்",
+      filter_split: "பிளவு பருப்பு",
+      filter_whole: "முழு பருப்பு",
+      filter_beans: "பீன்ஸ் & சிறப்பு வகைகள்",
+      filter_grains: "தானியங்கள்",
+      filter_rice: "அரிசி",
+      no_products: "இந்த வகையில் தயாரிப்புகள் இல்லை.",
+      cta_eyebrow: "மொத்த விற்பனை & ஏற்றுமதி",
+      cta_title: "தனிப்பயன் அளவு வேண்டுமா?<br />விலையை பேசுவோம்.",
+      cta_quote: "விலை பெறுக",
+      cta_call: "☎ இப்போது அழையுங்கள்",
+      footer_brand_desc: "உயர்தர பருப்பு, அரிசி மற்றும் தானியங்கள். நேரடி மூலத்திலிருந்து. இந்தியாவிலுள்ள வணிகங்கள் நம்புகின்றன.",
+      footer_products_heading: "தயாரிப்புகள்",
+      footer_split: "பிளவு பருப்பு",
+      footer_whole: "முழு பருப்பு",
+      footer_beans: "பீன்ஸ் & சிறப்பு வகைகள்",
+      footer_grains_rice: "தானியங்கள் & அரிசி",
+      footer_company_heading: "நிறுவனம்",
+      footer_home: "முகப்பு",
+      footer_why: "ஏன் நாங்கள்",
+      footer_contact: "தொடர்பு",
+      footer_export: "ஏற்றுமதி விசாரணை",
+      footer_copy: "© 2025 VVV Traders. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
+      footer_tagline: "மொத்த அரிசி · பருப்பு · சிறுதானியங்கள் · ஏற்றுமதி தரம்",
+      form_name: "உங்கள் பெயர்",
+      form_phone: "தொலைபேசி எண்",
+      modal_qty_label: "தேவையான அளவு",
+      modal_notes_label: "கூடுதல் குறிப்புகள்",
+      modal_submit_prefix: "விசாரணை அனுப்புக",
+      modal_submit: "விசாரணை அனுப்புக",
+      placeholder_name: "முழு பெயர்",
+      placeholder_phone: "உங்கள் தொலைபேசி எண்",
+      modal_qty_placeholder: "எ.கா: 5 டன் / 500 கிலோ",
+      modal_notes_placeholder: "டெலிவரி இடம், தர விருப்பம்...",
+      card_view_details: "விவரங்கள் காண்க",
+      card_cleaned: "சுத்தம் செய்யப்பட்டது · ஏற்றுமதி தயார்",
+      toast_success: "✓ விசாரணை அனுப்பப்பட்டது! விரைவில் தொடர்பு கொள்வோம்.",
+      toast_error: "தொடர பெயர் மற்றும் தொலைபேசி நிரப்பவும்.",
+      product_toor_dal: "துவரம் பருப்பு",
+      product_urad_dal: "உளுந்து பருப்பு",
+      product_moong_dal: "முளைக்கீரை பருப்பு",
+      product_masoor_dal: "மசூர் பருப்பு",
+      product_chana_dal: "சந்தன பருப்பு",
+      product_green_gram: "பச்சை பருப்பு",
+      product_black_gram: "கருப்பு பருப்பு",
+      product_red_lentils: "சிவப்பு மசூர்",
+      product_bengal_gram: "பங்கால் பருப்பு",
+      product_horse_gram: "கொல்லு பருப்பு",
+      product_field_beans: "வயல் பீன்ஸ்",
+      product_kidney_beans: "சிறுநீரக பீன்ஸ்",
+      product_black_chickpeas: "கருப்பு கடலை",
+      product_white_chickpeas: "வெள்ளை கடலை",
+      product_peas: "பட்டாணி",
+      product_wheat: "கோதுமை",
+      product_maize: "சோளம்",
+      product_basmati_rice: "பாஸ்மதி அரிசி",
+      product_steam_rice: "வேகவைத்த அரிசி",
+      product_raw_rice: "மச்சை அரிசி",
+      alt_arhar: "அர்ஹர் பருப்பு",
+      alt_split_black: "பிளவு கருப்பு",
+      alt_yellow_split: "மஞ்சள் பிளவு",
+      alt_red_lentil: "சிவப்பு மசூர்",
+      alt_bengal_gram: "பங்கால் பருப்பு",
+      alt_whole_moong: "முழு முளைக்கீரை",
+      alt_whole_urad: "முழு உளுந்து",
+      alt_whole_masoor: "முழு மசூர்",
+      alt_whole_chana: "முழு சந்தன",
+      alt_kulthi: "கொல்லு",
+      alt_broad_beans: "பரந்த பீன்ஸ்",
+      alt_rajma: "ராஜ்மா",
+      alt_kala_chana: "கருப்பு கடலை",
+      alt_kabuli_chana: "கபுலி கடலை",
+      alt_green_dry: "பச்சை/உலர்",
+      alt_sharbati: "சர்பதி",
+      alt_yellow_corn: "மஞ்சள் சோளம்",
+      alt_export_grade: "ஏற்றுமதி தரம்",
+      alt_boiled_rice: "வேகவைத்த அரிசி",
+      alt_sona_masoori: "சோனா மசூரி",
+    }
+  };
+
+  /* =====================================================
+     PRODUCTS DATA
+  ===================================================== */
+  const products = [
+    { id: 1,  nameKey: "product_toor_dal",        category: "Split Dals",        altKey: "alt_arhar",           emoji: "🫘", moq: "1 Ton",  img: "./images/products/toor_dal.png" },
+    { id: 2,  nameKey: "product_urad_dal",        category: "Split Dals",        altKey: "alt_split_black",     emoji: "⚫", moq: "1 Ton",  img: "./images/products/urad_dal.png" },
+    { id: 3,  nameKey: "product_moong_dal",       category: "Split Dals",        altKey: "alt_yellow_split",    emoji: "💛", moq: "1 Ton",  img: "./images/products/moong_dal.png" },
+    { id: 4,  nameKey: "product_masoor_dal",      category: "Split Dals",        altKey: "alt_red_lentil",      emoji: "🔴", moq: "1 Ton",  img: "./images/products/masoor_dal.png" },
+    { id: 5,  nameKey: "product_chana_dal",       category: "Split Dals",        altKey: "alt_bengal_gram",     emoji: "🟡", moq: "1 Ton",  img: "./images/products/chana_dal.png" },
+    { id: 6,  nameKey: "product_green_gram",      category: "Whole Pulses",      altKey: "alt_whole_moong",     emoji: "🟢", moq: "1 Ton",  img: "./images/products/green_gram.png" },
+    { id: 7,  nameKey: "product_black_gram",      category: "Whole Pulses",      altKey: "alt_whole_urad",      emoji: "⚫", moq: "1 Ton",  img: "./images/products/black_gram.png" },
+    { id: 8,  nameKey: "product_red_lentils",     category: "Whole Pulses",      altKey: "alt_whole_masoor",    emoji: "🔴", moq: "500 kg", img: "./images/products/red_lentils.png" },
+    { id: 9,  nameKey: "product_bengal_gram",     category: "Whole Pulses",      altKey: "alt_whole_chana",     emoji: "🟤", moq: "1 Ton",  img: "./images/products/bengal_gram.png" },
+    { id: 10, nameKey: "product_horse_gram",      category: "Whole Pulses",      altKey: "alt_kulthi",          emoji: "🫘", moq: "500 kg", img: "./images/products/horse_gram.png" },
+    { id: 11, nameKey: "product_field_beans",     category: "Whole Pulses",      altKey: "alt_broad_beans",     emoji: "🟩", moq: "500 kg", img: "./images/products/field_beans.png" },
+    { id: 12, nameKey: "product_kidney_beans",    category: "Beans & Specialty", altKey: "alt_rajma",           emoji: "🫘", moq: "500 kg", img: "./images/products/kidney_beans.png" },
+    { id: 13, nameKey: "product_black_chickpeas", category: "Beans & Specialty", altKey: "alt_kala_chana",       emoji: "⚫", moq: "1 Ton",  img: "./images/products/black_chickpeas.png" },
+    { id: 14, nameKey: "product_white_chickpeas", category: "Beans & Specialty", altKey: "alt_kabuli_chana",     emoji: "⚪", moq: "1 Ton",  img: "./images/products/white_chickpeas.png" },
+    { id: 15, nameKey: "product_peas",            category: "Beans & Specialty", altKey: "alt_green_dry",        emoji: "💚", moq: "500 kg", img: "./images/products/peas.png" },
+    { id: 16, nameKey: "product_wheat",           category: "Grains",            altKey: "alt_sharbati",         emoji: "🌾", moq: "5 Ton",  img: "./images/products/wheat.png" },
+    { id: 17, nameKey: "product_maize",           category: "Grains",            altKey: "alt_yellow_corn",      emoji: "🌽", moq: "2 Ton",  img: "./images/products/maize.png" },
+    { id: 18, nameKey: "product_basmati_rice",    category: "Rice",              altKey: "alt_export_grade",     emoji: "🍚", moq: "10 Ton", img: "./images/products/basmati_rice.png" },
+    { id: 19, nameKey: "product_steam_rice",      category: "Rice",              altKey: "alt_boiled_rice",      emoji: "🍚", moq: "10 Ton", img: "./images/products/steam_rice.png" },
+    { id: 20, nameKey: "product_raw_rice",        category: "Rice",              altKey: "alt_sona_masoori",     emoji: "🍚", moq: "5 Ton",  img: "./images/products/raw_rice.png" },
+  ];
+
+  /* =====================================================
+     LANGUAGE SYSTEM
+  ===================================================== */
+  let currentLang = localStorage.getItem('vvv_lang') || 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('vvv_lang', lang);
+    applyTranslations();
+    updateLangButtons();
+    // Re-render cards with new language
+    renderProducts(currentFilter);
+  }
+
+  function applyTranslations() {
+    const t = translations[currentLang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) {
+        if (/<[a-z][\s\S]*>/i.test(t[key])) el.innerHTML = t[key];
+        else el.textContent = t[key];
+      }
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+    document.getElementById('htmlRoot').lang = currentLang === 'ta' ? 'ta' : 'en';
+  }
+
+  function updateLangButtons() {
+    document.getElementById('btnEN').classList.toggle('active', currentLang === 'en');
+    document.getElementById('btnTA').classList.toggle('active', currentLang === 'ta');
+  }
+
+  /* =====================================================
+     CARD RENDER
+  ===================================================== */
+  function createCard(product, delay = 0) {
+    const t = translations[currentLang];
+    const card = document.createElement('div');
+    card.className = 'p-card';
+    card.dataset.category = product.category;
+    card.style.transitionDelay = delay + 'ms';
+
+    // Get translated product name
+    const productName = t[product.nameKey] || product.nameKey;
+    const productAlt = t[product.altKey] || product.altKey;
+
+    const imgHTML = product.img
+      ? `<div class="p-card-img"><img src="${product.img}" alt="${productName}" loading="lazy" /></div>`
+      : `<div class="p-card-img-placeholder"><span class="placeholder-icon">${product.emoji}</span></div>`;
+
+    card.innerHTML = `
+      ${imgHTML}
+      <div class="p-card-body">
+        <div class="p-card-top">
+          <h4 class="p-card-name">${productName}</h4>
+          <span class="p-card-tag">${product.category}</span>
+        </div>
+        <p class="p-card-desc">${productAlt} · ${t.card_cleaned || 'Cleaned & Sorted · Export Ready'}</p>
+        <div class="p-card-footer">
+          <div class="p-card-moq">MOQ: <strong>${product.moq}</strong></div>
+          <button class="btn-outline-green" onclick="openModal('${productName}', '${product.category}')">${t.card_view_details || 'View Details'}</button>
+        </div>
+      </div>`;
+
+    return card;
+  }
+
+  /* =====================================================
+     FILTER FUNCTIONALITY
+  ===================================================== */
+  let currentFilter = 'All';
+
+  function renderProducts(filter) {
+    const grid = document.getElementById('productGrid');
+    const noMsg = document.getElementById('noProducts');
+
+    grid.querySelectorAll('.p-card, .cat-section-header').forEach(el => el.remove());
+
+    const filtered = filter === 'All'
+      ? products
+      : products.filter(p => p.category === filter);
+
+    if (filtered.length === 0) { noMsg.style.display = 'block'; return; }
+    noMsg.style.display = 'none';
+
+    if (filter === 'All') {
+      const categories = [...new Set(products.map(p => p.category))];
+      let globalDelay = 0;
+      categories.forEach(cat => {
+        const catProducts = products.filter(p => p.category === cat);
+        const header = document.createElement('div');
+        header.className = 'cat-section-header';
+        const countLabel = currentLang === 'ta' ? `${catProducts.length} தயாரிப்புகள்` : `${catProducts.length} products`;
+        header.innerHTML = `<h3>${cat}</h3><div class="cat-section-line"></div><span class="cat-section-count">${countLabel}</span>`;
+        grid.insertBefore(header, noMsg);
+        catProducts.forEach(prod => {
+          grid.insertBefore(createCard(prod, globalDelay * 60), noMsg);
+          globalDelay++;
+        });
+      });
+    } else {
+      filtered.forEach((prod, i) => grid.insertBefore(createCard(prod, i * 70), noMsg));
+    }
+
+    // Trigger fade-in
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      grid.querySelectorAll('.p-card').forEach(card => card.classList.add('visible'));
+    }));
+  }
+
+  function initFilters() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderProducts(currentFilter);
+      });
+    });
+  }
+
+  /* =====================================================
+     MODAL
+  ===================================================== */
+  function openModal(name, cat) {
+    document.getElementById('modalProductName').textContent = name;
+    document.getElementById('modalProductCat').textContent = cat ? cat + ' · VVV Traders' : 'VVV Traders';
+    document.getElementById('modalBtnName').textContent = name !== 'General Inquiry' ? name : '';
+    document.getElementById('mName').value = '';
+    document.getElementById('mPhone').value = '';
+    document.getElementById('mQty').value = '';
+    document.getElementById('mNote').value = '';
+    // Remove any error states
+    ['mName','mPhone','mQty','mNote'].forEach(id => document.getElementById(id).classList.remove('error'));
+    document.getElementById('modalBackdrop').classList.add('open');
+    document.getElementById('modalDrawer').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalBackdrop').classList.remove('open');
+    document.getElementById('modalDrawer').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function submitEnquiry() {
+    const t = translations[currentLang];
+    const name = document.getElementById('mName').value.trim();
+    const phone = document.getElementById('mPhone').value.trim();
+    const qty = document.getElementById('mQty').value.trim();
+    const notes = document.getElementById('mNote').value.trim();
+    const product = document.getElementById('modalProductName').textContent;
+    let hasError = false;
+
+    ['mName','mPhone'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.classList.add('error'); hasError = true; }
+      else el.classList.remove('error');
+    });
+
+    if (hasError) { showToast(t.toast_error, true); return; }
+
+    // Send to Formspree
+    const formData = new FormData();
+    formData.append('Name', name);
+    formData.append('Phone', phone);
+    formData.append('Product', product);
+    formData.append('Quantity', qty || 'Not specified');
+    formData.append('Notes', notes);
+    formData.append('Source', 'Products Page');
+
+    fetch('https://formspree.io/f/meojowla', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => {
+        if (res.ok) {
+            closeModal();
+            showToast(t.toast_success);
+        } else {
+            showToast(t.toast_error, true);
+        }
+    })
+    .catch(err => showToast('Error sending. Please try again.', true));
+  }
+
+  /* =====================================================
+     TOAST
+  ===================================================== */
+  function showToast(msg, isError = false) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.style.background = isError ? '#c0392b' : '#2d5a27';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  /* =====================================================
+     NAVBAR & INIT
+  ===================================================== */
+  document.addEventListener('DOMContentLoaded', () => {
+    renderProducts('All');
+    initFilters();
+    applyTranslations();
+    updateLangButtons();
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.getElementById('navClose').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+    });
+
+    // Navbar scroll effect — same as home page
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+  });
+
+  // ESC closes modal
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Init lang on load
+  applyTranslations();
+  updateLangButtons();
+  </script>
+
+</body>
+</html>

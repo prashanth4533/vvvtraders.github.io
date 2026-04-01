@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VVV Traders — Premium Quality Pulses & Rice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===== LANGUAGE TOGGLE ===== */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 3px;
+      flex-shrink: 0;
+      backdrop-filter: blur(6px);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .navbar.scrolled .lang-toggle {
+      background: rgba(58,122,48,0.08);
+      border-color: rgba(58,122,48,0.25);
+    }
+    .lang-btn {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 13px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: transparent;
+      color: rgba(255,255,255,0.65);
+      transition: all 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .navbar.scrolled .lang-btn { color: var(--text-muted); }
+    .lang-btn.active {
+      background: var(--green-main);
+      color: #fff !important;
+      box-shadow: 0 2px 8px rgba(58,122,48,0.35);
+    }
+
+    /* ===== MODAL ===== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,6,0.55);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -54%);
+      z-index: 10001;
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px 36px;
+      width: 92%;
+      max-width: 480px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .modal-box.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translate(-50%, -50%);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: #f5f0e8;
+      border: none;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      font-size: 19px;
+      cursor: pointer;
+      color: #7a7a6a;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close-btn:hover { background: #ede8dd; }
+    .modal-product-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: #e8f5e3;
+      color: #2d5a27;
+      padding: 5px 12px;
+      border-radius: 50px;
+      margin-bottom: 10px;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a14;
+      margin-bottom: 20px;
+    }
+    .modal-form-group {
+      margin-bottom: 16px;
+    }
+    .modal-form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #7a7a6a;
+      margin-bottom: 7px;
+    }
+    .modal-form-group input,
+    .modal-form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #d9d0bc;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: #1a1a14;
+      background: #faf8f4;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .modal-form-group input:focus,
+    .modal-form-group textarea:focus {
+      border-color: #3a7a30;
+      box-shadow: 0 0 0 3px rgba(58,122,48,0.1);
+    }
+    .modal-form-group input.error,
+    .modal-form-group textarea.error {
+      border-color: #c0392b;
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+    }
+    .modal-submit-btn {
+      width: 100%;
+      padding: 15px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      background: #3a7a30;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 6px;
+    }
+    .modal-submit-btn:hover { background: #2d5a27; transform: translateY(-1px); }
+
+    /* Mobile menu close button */
+    .nav-close {
+      display: none;
+      position: absolute;
+      top: 24px; right: 24px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 9999;
+    }
+    @media (max-width: 768px) {
+      .nav-links.open .nav-close { display: block; }
+      .lang-toggle { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-badge">VVV</span>
+        <span class="logo-text">TRADERS</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <button class="nav-close" id="navClose" aria-label="Close menu">&#215;</button>
+        <li><a href="index.html" class="active" data-i18n="nav_home">Home</a></li>
+        <li><a href="products.html" data-i18n="nav_products">Products</a></li>
+        <li><a href="#popular" data-i18n="nav_about">About</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+
+      <!-- Language Toggle -->
+      <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnTA" onclick="setLang('ta')">தமிழ்</button>
+      </div>
+
+      <button class="nav-cta" onclick="openModal('General Inquiry', '')" data-i18n="nav_cta">Get Quote</button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <img  
+      class="hero-bg"
+      src="./images/hero_bg.png"
+      alt="Warehouse with grain sacks"
+    />
+    <div class="hero-content">
+      <div class="hero-tag" data-i18n="hero_tag">&#10003; Direct Farm Sourcing</div>
+      <h1 class="hero-title" data-i18n="hero_title">Premium Quality<br />Pulses & Rice —<br /><em data-i18n="hero_title_em">Direct from Source</em></h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">Bulk supply for supermarkets, wholesalers &amp; export buyers.<br />Trusted quality. Best pricing.</p>
+      <div class="hero-buttons">
+        <a href="products.html" class="btn btn-primary" data-i18n="hero_btn_products">View Products</a>
+        <a href="#contact" class="btn btn-secondary" data-i18n="hero_btn_contact">Contact Us</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>500+</strong><span data-i18n="stat_clients">Clients Served</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>50+</strong><span data-i18n="stat_products">Product Variants</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>15+</strong><span data-i18n="stat_years">Years Experience</span></div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span data-i18n="scroll_label">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCT CATEGORIES ===== -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-eyebrow" data-i18n="cat_eyebrow">What We Offer</p>
+          <h2 class="section-title" data-i18n="cat_title">Product categories</h2>
+        </div>
+        <a href="products.html" class="browse-all" data-i18n="cat_browse">Browse all products <span>&#8250;</span></a>
+      </div>
+
+      <div class="categories-grid">
+        <!-- Pulses -->
+        <div class="cat-card">
+          <div class="cat-img-wrap">
+            <img src="./images/pulses_tab.png" alt="Pulses Dal" />
+            <div class="cat-img-overlay"></div>
+            <div class="cat-label">
+              <h3 data-i18n="cat_pulses_name">Pulses (Dal)</h3>
+              <p>Toor Dal · Urad Dal · Moong Dal</p>
+            </div>
+          </div>
+          <div class="cat-body">
+            <div class="cat-price"><span data-i18n="cat_starting">Starting</span> <strong>₹75/kg</strong></div>
+            <div class="cat-product">
+              <div class="cat-product-info">
+                <span class="product-name">Premium Toor Dal</span>
+                <span class="product-moq">MOQ: 1 ton</span>
+              </div>
+              <span class="moq-badge" data-i18n="moq_1ton">Min 1 Ton</span>
+            </div>
+            <button class="btn btn-enquire" onclick="openModal('Pulses (Dal)', 'Toor Dal · Urad Dal · Moong Dal')" data-i18n="btn_enquire">Enquire Now</button>
+          </div>
+        </div>
+
+        <!-- Rice -->
+        <div class="cat-card">
+          <div class="cat-img-wrap">
+            <img src="./images/Rice_tab.png" alt="Rice" />
+            <div class="cat-img-overlay"></div>
+            <div class="cat-label">
+              <h3 data-i18n="cat_rice_name">Rice</h3>
+              <p>Raw Rice · Steam Rice · Basmati Rice</p>
+            </div>
+          </div>
+          <div class="cat-body">
+            <div class="cat-price"><span data-i18n="cat_starting">Starting</span> <strong>₹39/kg</strong></div>
+            <div class="cat-product">
+              <div class="cat-product-info">
+                <span class="product-name">Steam Rice — Export Quality</span>
+                <span class="product-moq">MOQ: 10 ton</span>
+              </div>
+              <span class="moq-badge" data-i18n="moq_10ton">Min 10 Ton</span>
+            </div>
+            <button class="btn btn-enquire" onclick="openModal('Rice', 'Raw Rice · Steam Rice · Basmati Rice')" data-i18n="btn_enquire">Enquire Now</button>
+          </div>
+        </div>
+
+        <!-- Millets -->
+        <div class="cat-card">
+          <div class="cat-img-wrap">
+            <img src="./images/millets_tab.png" alt="Millets and Grains" />
+            <div class="cat-img-overlay"></div>
+            <div class="cat-label">
+              <h3 data-i18n="cat_millets_name">Millets &amp; Grains</h3>
+              <p>Ragi · Bajra · Foxtail Millet</p>
+            </div>
+          </div>
+          <div class="cat-body">
+            <div class="cat-price"><span data-i18n="cat_starting">Starting</span> <strong>₹64/kg</strong></div>
+            <div class="cat-product">
+              <div class="cat-product-info">
+                <span class="product-name">Whole Urad Dal — Cleaned &amp; Sorted</span>
+                <span class="product-moq">MOQ: 1 ton</span>
+              </div>
+              <span class="moq-badge" data-i18n="moq_1ton">Min 1 Ton</span>
+            </div>
+            <button class="btn btn-enquire" onclick="openModal('Millets & Grains', 'Ragi · Bajra · Foxtail Millet')" data-i18n="btn_enquire">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POPULAR PRODUCTS ===== -->
+  <section class="section section-beige" id="popular">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-eyebrow" data-i18n="pop_eyebrow">Best Sellers</p>
+          <h2 class="section-title" data-i18n="pop_title">Popular products</h2>
+        </div>
+      </div>
+
+      <div class="popular-grid">
+        <!-- Left: Export Quality Toor Dal -->
+        <div class="popular-left">
+          <div class="why-card">
+            <img src="./images/Export_Toor_dal.png" alt="Premium Toor Dal" class="why-bg" />
+            <div class="why-overlay"></div>
+            <div class="why-content">
+              <h3 data-i18n="toor_title">Export Quality<br />Toor Dal</h3>
+              <p data-i18n="toor_desc">Sourced direct from premium farms, our Toor Dal is thoroughly cleaned, sorted, and meets international quality standards to meet buyer requirements.</p>
+              <button class="btn btn-white" onclick="openModal('Toor Dal', 'Export Quality')" data-i18n="btn_request_pricing">Request Pricing</button>
+            </div>
+          </div>
+
+          <!-- Why Choose Us Card -->
+          <div class="why-card">
+            <img src="./images/warehouse.jpg" alt="Warehouse operations" class="why-bg" />
+            <div class="why-overlay"></div>
+            <div class="why-content">
+              <h3 data-i18n="why_title">Why Businesses Choose Us</h3>
+              <ul class="why-list">
+                <li><span class="check">&#10003;</span> <span data-i18n="why_1">Direct sourcing from farmers</span></li>
+                <li><span class="check">&#10003;</span> <span data-i18n="why_2">Bulk quantity availability</span></li>
+                <li><span class="check">&#10003;</span> <span data-i18n="why_3">Competitive wholesale pricing</span></li>
+                <li><span class="check">&#10003;</span> <span data-i18n="why_4">Export-ready quality</span></li>
+                <li><span class="check">&#10003;</span> <span data-i18n="why_5">Reliable delivery</span></li>
+              </ul>
+              <button class="btn btn-white" onclick="openModal('General Inquiry', '')" data-i18n="btn_get_quote">Get Quote</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="popular-right">
+          <!-- Basmati Rice Card -->
+          <div class="product-card">
+            <div class="product-card-img">
+              <img src="./images/Basmati _Rice.png" alt="Basmati Rice" />
+            </div>
+            <div class="product-card-body">
+              <span class="product-tag" data-i18n="tag_export">Export Grade</span>
+              <h4 data-i18n="basmati_title">Export Quality Basmati Rice</h4>
+              <p data-i18n="basmati_desc">Sourced directly from premium farms. Our basmati rice meets quality standards and is present to meet large-scale needs for wholesalers and export buyers.</p>
+              <div class="product-card-footer">
+                <div>
+                  <div class="price-label" data-i18n="starting_from">Starting from</div>
+                  <div class="price-value">₹89/kg</div>
+                </div>
+                <button class="btn btn-primary-sm" onclick="openModal('Basmati Rice', 'Export Grade')" data-i18n="btn_request_pricing">Request Pricing</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seller Info Card -->
+          <div class="seller-card">
+            <div class="seller-image-main">
+              <img src="./images/seller_profile.jpg" alt="VVV Traders" class="seller-main-img" />
+            </div>
+            <div class="seller-content">
+              <h3>VVV Traders</h3>
+              <p data-i18n="seller_desc">Trusted exporter of pulses and fine basmati to many buyers. We offer strict quality for wholesale and roasting — any variety.</p>
+              <div class="seller-actions">
+                <a href="tel:6382378017" class="seller-phone">
+                  <span class="phone-icon">☎</span>
+                  6382378017
+                </a>
+                <button class="btn btn-email" onclick="window.location.href='mailto:info@vvvtraders.com'" data-i18n="btn_email">✉ Email Us</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT SECTION ===== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-left">
+          <p class="section-eyebrow" data-i18n="contact_eyebrow">Reach Us</p>
+          <h2 class="section-title" data-i18n="contact_title">Let's Do Business<br />Together</h2>
+          <p class="contact-desc" data-i18n="contact_desc">We supply in bulk to supermarkets, wholesale dealers, and export buyers across India and internationally. Get in touch for pricing and availability.</p>
+          <div class="contact-card">
+            <div class="contact-card-profile">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="VVV Traders" />
+              <div>
+                <h4>VVV Traders</h4>
+                <p data-i18n="contact_subtitle">Trusted wholesale supplier</p>
+              </div>
+            </div>
+            <div class="contact-details">
+              <a href="tel:9443394930" class="contact-detail-item">
+                <span class="detail-icon">&#128222;</span>
+                <span>9443394930</span>
+              </a>
+              <a href="mailto:info@vvvtraders.com" class="contact-detail-item">
+                <span class="detail-icon">&#9993;</span>
+                <span>info@vvvtraders.com</span>
+              </a>
+              <div class="contact-detail-item">
+                <span class="detail-icon">&#128205;</span>
+                <span data-i18n="contact_location">Coimbatore, Tamil Nadu, India</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-right">
+          <div class="form-card">
+            <h3 data-i18n="form_title">Send an Enquiry</h3>
+            <p data-i18n="form_subtitle">Fill in the details below and we'll get back to you within 24 hours.</p>
+            <div class="form-group">
+              <label data-i18n="form_name">Name</label>
+              <input type="text" id="contactName" data-i18n-placeholder="placeholder_name" placeholder="Your full name" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_phone">Phone</label>
+              <input type="tel" id="contactPhone" data-i18n-placeholder="placeholder_phone" placeholder="Your phone number" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="form_req">Requirement</label>
+              <textarea id="contactReq" data-i18n-placeholder="placeholder_req" placeholder="Tell us what you need — product, quantity, delivery location..." rows="4"></textarea>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="handleContactSubmit()" data-i18n="form_submit">Send Requirement</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="logo-badge">VVV</span>
+            <span class="logo-text">TRADERS</span>
+          </div>
+          <p data-i18n="footer_brand_desc">Premium quality pulses, rice, and grains. Direct from source. Trusted by businesses across India.</p>
+        </div>
+        <div class="footer-links">
+          <h5 data-i18n="footer_products_heading">Products</h5>
+          <ul>
+            <li><a href="products.html" data-i18n="footer_pulses">Pulses (Dal)</a></li>
+            <li><a href="products.html" data-i18n="footer_basmati">Basmati Rice</a></li>
+            <li><a href="products.html" data-i18n="footer_steam">Steam Rice</a></li>
+            <li><a href="products.html" data-i18n="footer_millets">Millets &amp; Grains</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h5 data-i18n="footer_company_heading">Company</h5>
+          <ul>
+            <li><a href="#" data-i18n="footer_about">About Us</a></li>
+            <li><a href="#popular" data-i18n="footer_why">Why Us</a></li>
+            <li><a href="#contact" data-i18n="footer_contact">Contact</a></li>
+            <li><a href="#contact" data-i18n="footer_export">Export Inquiry</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">&copy; 2025 VVV Traders. All rights reserved.</p>
+        <p data-i18n="footer_tagline">Bulk Rice · Pulses · Millets · Export Grade</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close-btn" onclick="closeModal()">&#215;</button>
+    <div class="modal-product-badge" id="modalBadge"></div>
+    <div class="modal-title" id="modalTitle" data-i18n="modal_title">Send Enquiry</div>
+    <div class="modal-form-group">
+      <label data-i18n="form_name">Name</label>
+      <input type="text" id="mName" data-i18n-placeholder="placeholder_name" placeholder="Your full name" />
+    </div>
+    <div class="modal-form-group">
+      <label data-i18n="form_phone">Phone</label>
+      <input type="tel" id="mPhone" data-i18n-placeholder="placeholder_phone" placeholder="Your phone number" />
+    </div>
+    <div class="modal-form-group">
+      <label data-i18n="form_req">Requirement</label>
+      <textarea id="mReq" rows="3" data-i18n-placeholder="placeholder_req" placeholder="Tell us what you need — product, quantity, delivery location..."></textarea>
+    </div>
+    <button class="modal-submit-btn" onclick="submitModal()" data-i18n="modal_submit">Send Enquiry</button>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+  /* =====================================================
+     TRANSLATIONS
+  ===================================================== */
+  const translations = {
+    en: {
+      nav_home: "Home",
+      nav_products: "Products",
+      nav_about: "About",
+      nav_contact: "Contact",
+      nav_cta: "Get Quote",
+      hero_tag: "✓ Direct Farm Sourcing",
+      hero_title: "Premium Quality<br />Pulses & Rice —<br /><em>Direct from Source</em>",
+      hero_title_em: "Direct from Source",
+      hero_subtitle: "Bulk supply for supermarkets, wholesalers & export buyers.<br />Trusted quality. Best pricing.",
+      hero_btn_products: "View Products",
+      hero_btn_contact: "Contact Us",
+      stat_clients: "Clients Served",
+      stat_products: "Product Variants",
+      stat_years: "Years Experience",
+      scroll_label: "Scroll",
+      cat_eyebrow: "What We Offer",
+      cat_title: "Product categories",
+      cat_browse: "Browse all products ›",
+      cat_pulses_name: "Pulses (Dal)",
+      cat_rice_name: "Rice",
+      cat_millets_name: "Millets & Grains",
+      cat_starting: "Starting",
+      moq_1ton: "Min 1 Ton",
+      moq_10ton: "Min 10 Ton",
+      btn_enquire: "Enquire Now",
+      pop_eyebrow: "Best Sellers",
+      pop_title: "Popular products",
+      toor_title: "Export Quality<br />Toor Dal",
+      toor_desc: "Sourced direct from premium farms, our Toor Dal is thoroughly cleaned, sorted, and meets international quality standards to meet buyer requirements.",
+      btn_request_pricing: "Request Pricing",
+      why_title: "Why Businesses Choose Us",
+      why_1: "Direct sourcing from farmers",
+      why_2: "Bulk quantity availability",
+      why_3: "Competitive wholesale pricing",
+      why_4: "Export-ready quality",
+      why_5: "Reliable delivery",
+      btn_get_quote: "Get Quote",
+      tag_export: "Export Grade",
+      basmati_title: "Export Quality Basmati Rice",
+      basmati_desc: "Sourced directly from premium farms. Our basmati rice meets quality standards and is present to meet large-scale needs for wholesalers and export buyers.",
+      starting_from: "Starting from",
+      seller_desc: "Trusted exporter of pulses and fine basmati to many buyers. We offer strict quality for wholesale and roasting — any variety.",
+      btn_email: "✉ Email Us",
+      contact_eyebrow: "Reach Us",
+      contact_title: "Let's Do Business<br />Together",
+      contact_desc: "We supply in bulk to supermarkets, wholesale dealers, and export buyers across India and internationally. Get in touch for pricing and availability.",
+      contact_subtitle: "Trusted wholesale supplier",
+      contact_location: "Coimbatore, Tamil Nadu, India",
+      form_title: "Send an Enquiry",
+      form_subtitle: "Fill in the details below and we'll get back to you within 24 hours.",
+      form_name: "Name",
+      form_phone: "Phone",
+      form_req: "Requirement",
+      form_submit: "Send Requirement",
+      placeholder_name: "Your full name",
+      placeholder_phone: "Your phone number",
+      placeholder_req: "Tell us what you need — product, quantity, delivery location...",
+      footer_brand_desc: "Premium quality pulses, rice, and grains. Direct from source. Trusted by businesses across India.",
+      footer_products_heading: "Products",
+      footer_pulses: "Pulses (Dal)",
+      footer_basmati: "Basmati Rice",
+      footer_steam: "Steam Rice",
+      footer_millets: "Millets & Grains",
+      footer_company_heading: "Company",
+      footer_about: "About Us",
+      footer_why: "Why Us",
+      footer_contact: "Contact",
+      footer_export: "Export Inquiry",
+      footer_copy: "© 2025 VVV Traders. All rights reserved.",
+      footer_tagline: "Bulk Rice · Pulses · Millets · Export Grade",
+      modal_title: "Send Enquiry",
+      modal_submit: "Send Enquiry",
+      toast_success: "✓ Enquiry sent! We'll contact you shortly.",
+      toast_error: "Please fill in all required fields.",
+    },
+    ta: {
+      nav_home: "முகப்பு",
+      nav_products: "தயாரிப்புகள்",
+      nav_about: "எங்களை பற்றி",
+      nav_contact: "தொடர்பு",
+      nav_cta: "விலை பெறுக",
+      hero_tag: "✓ நேரடி விவசாயி மூலம்",
+      hero_title: "உயர்தர<br />பருப்பு & அரிசி —<br /><em>நேரடி மூலத்திலிருந்து</em>",
+      hero_title_em: "நேரடி மூலத்திலிருந்து",
+      hero_subtitle: "சூப்பர்மார்க்கெட்டுகள், மொத்த வியாபாரிகள் & ஏற்றுமதி வாங்குபவர்களுக்கு மொத்த விநியோகம்.<br />நம்பகமான தரம். சிறந்த விலை.",
+      hero_btn_products: "தயாரிப்புகளை காண்க",
+      hero_btn_contact: "தொடர்பு கொள்ளுங்கள்",
+      stat_clients: "வாடிக்கையாளர்கள்",
+      stat_products: "தயாரிப்பு வகைகள்",
+      stat_years: "ஆண்டு அனுபவம்",
+      scroll_label: "கீழே செல்லுங்கள்",
+      cat_eyebrow: "நாங்கள் வழங்குவது",
+      cat_title: "தயாரிப்பு வகைகள்",
+      cat_browse: "அனைத்து தயாரிப்புகளையும் காண்க ›",
+      cat_pulses_name: "பருப்பு வகைகள்",
+      cat_rice_name: "அரிசி",
+      cat_millets_name: "சிறுதானியங்கள் & தானியங்கள்",
+      cat_starting: "தொடங்கி",
+      moq_1ton: "குறைந்தது 1 டன்",
+      moq_10ton: "குறைந்தது 10 டன்",
+      btn_enquire: "விசாரிக்கவும்",
+      pop_eyebrow: "அதிக விற்பனையாகும்",
+      pop_title: "பிரபலமான தயாரிப்புகள்",
+      toor_title: "ஏற்றுமதி தரம்<br />துவரம் பருப்பு",
+      toor_desc: "தேர்ந்த விவசாயிகளிடமிருந்து நேரடியாக பெறப்படுகிறது. நமது துவரம் பருப்பு சுத்தமாக சலிக்கப்பட்டு சர்வதேச தர நிலைகளை பூர்த்தி செய்கிறது.",
+      btn_request_pricing: "விலை கோருக",
+      why_title: "வணிகங்கள் ஏன் நம்மை தேர்வு செய்கின்றன",
+      why_1: "விவசாயிகளிடமிருந்து நேரடி மூலம்",
+      why_2: "மொத்த அளவு கிடைக்கும்",
+      why_3: "போட்டி மொத்த விலை",
+      why_4: "ஏற்றுமதி தயார் தரம்",
+      why_5: "நம்பகமான டெலிவரி",
+      btn_get_quote: "விலை பெறுக",
+      tag_export: "ஏற்றுமதி தரம்",
+      basmati_title: "ஏற்றுமதி தர பாஸ்மதி அரிசி",
+      basmati_desc: "நேரடியாக தேர்ந்த விவசாயிகளிடமிருந்து பெறப்படுகிறது. நமது பாஸ்மதி அரிசி மொத்த வியாபாரிகளுக்கும் ஏற்றுமதி வாங்குபவர்களுக்கும் ஏற்றது.",
+      starting_from: "தொடங்கி",
+      seller_desc: "பல வாங்குபவர்களுக்கு பருப்பு மற்றும் பாஸ்மதி ஏற்றுமதி செய்யும் நம்பகமான நிறுவனம். மொத்த விற்பனைக்கு கண்டிப்பான தரம்.",
+      btn_email: "✉ மின்னஞ்சல் அனுப்புங்கள்",
+      contact_eyebrow: "எங்களை அடையுங்கள்",
+      contact_title: "ஒன்றாக வணிகம்<br />செய்வோம்",
+      contact_desc: "நாங்கள் இந்தியாவிலும் சர்வதேசத்திலும் சூப்பர்மார்க்கெட்டுகள், மொத்த வியாபாரிகள் மற்றும் ஏற்றுமதி வாங்குபவர்களுக்கு விநியோகிக்கிறோம். விலை மற்றும் கிடைக்கும் தன்மைக்கு தொடர்பு கொள்ளுங்கள்.",
+      contact_subtitle: "நம்பகமான மொத்த சப்ளையர்",
+      contact_location: "கோயம்புத்தூர், தமிழ்நாடு, இந்தியா",
+      form_title: "விசாரணை அனுப்புங்கள்",
+      form_subtitle: "கீழே விவரங்களை பூர்த்தி செய்யுங்கள், 24 மணி நேரத்தில் திரும்பி வருவோம்.",
+      form_name: "பெயர்",
+      form_phone: "தொலைபேசி",
+      form_req: "தேவை",
+      form_submit: "தேவை அனுப்புங்கள்",
+      placeholder_name: "உங்கள் முழு பெயர்",
+      placeholder_phone: "உங்கள் தொலைபேசி எண்",
+      placeholder_req: "உங்களுக்கு என்ன தேவை — தயாரிப்பு, அளவு, டெலிவரி இடம்...",
+      footer_brand_desc: "உயர்தர பருப்பு, அரிசி மற்றும் தானியங்கள். நேரடி மூலத்திலிருந்து. இந்தியாவிலுள்ள வணிகங்கள் நம்புகின்றன.",
+      footer_products_heading: "தயாரிப்புகள்",
+      footer_pulses: "பருப்பு வகைகள்",
+      footer_basmati: "பாஸ்மதி அரிசி",
+      footer_steam: "வேகவைத்த அரிசி",
+      footer_millets: "சிறுதானியங்கள் & தானியங்கள்",
+      footer_company_heading: "நிறுவனம்",
+      footer_about: "எங்களை பற்றி",
+      footer_why: "ஏன் நாங்கள்",
+      footer_contact: "தொடர்பு",
+      footer_export: "ஏற்றுமதி விசாரணை",
+      footer_copy: "© 2025 VVV Traders. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
+      footer_tagline: "மொத்த அரிசி · பருப்பு · சிறுதானியங்கள் · ஏற்றுமதி தரம்",
+      modal_title: "விசாரணை அனுப்புங்கள்",
+      modal_submit: "விசாரணை அனுப்புங்கள்",
+      toast_success: "✓ விசாரணை அனுப்பப்பட்டது! விரைவில் தொடர்பு கொள்வோம்.",
+      toast_error: "தேவையான அனைத்து புலங்களையும் நிரப்பவும்.",
+    }
+  };
+
+  /* =====================================================
+     LANGUAGE SYSTEM
+  ===================================================== */
+  let currentLang = localStorage.getItem('vvv_lang') || 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('vvv_lang', lang);
+    applyTranslations();
+    updateLangButtons();
+  }
+
+  function applyTranslations() {
+    const t = translations[currentLang];
+
+    // data-i18n text nodes (skip elements that contain child elements we don't want to break)
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) {
+        // Only set innerHTML if value contains HTML tags, otherwise use textContent
+        if (/<[a-z][\s\S]*>/i.test(t[key])) {
+          el.innerHTML = t[key];
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    });
+
+    // Placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+
+    // HTML lang attribute
+    document.getElementById('htmlRoot').lang = currentLang === 'ta' ? 'ta' : 'en';
+  }
+
+  function updateLangButtons() {
+    document.getElementById('btnEN').classList.toggle('active', currentLang === 'en');
+    document.getElementById('btnTA').classList.toggle('active', currentLang === 'ta');
+  }
+
+  /* =====================================================
+     MODAL SYSTEM (Formspree Integration)
+  ===================================================== */
+  function openModal(productName, category) {
+    const t = translations[currentLang];
+    document.getElementById('modalBadge').textContent = category || 'VVV Traders';
+    document.getElementById('modalTitle').textContent = productName
+      ? (currentLang === 'ta' ? productName + ' — விசாரணை' : productName + ' — Enquiry')
+      : t.modal_title;
+    document.getElementById('mName').value = '';
+    document.getElementById('mPhone').value = '';
+    document.getElementById('mReq').value = '';
+    // Pre-fill requirement field
+    if (productName && productName !== 'General Inquiry') {
+      document.getElementById('mReq').value = currentLang === 'ta'
+        ? productName + ' தேவை: '
+        : 'Interested in ' + productName + '. ';
+    }
+    document.getElementById('modalBackdrop').classList.add('open');
+    document.getElementById('modalBox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalBackdrop').classList.remove('open');
+    document.getElementById('modalBox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function submitModal() {
+    const name = document.getElementById('mName').value.trim();
+    const phone = document.getElementById('mPhone').value.trim();
+    const req = document.getElementById('mReq').value.trim();
+    const product = document.getElementById('modalTitle').textContent;
+    const t = translations[currentLang];
+
+    let hasError = false;
+    ['mName','mPhone','mReq'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.classList.add('error'); hasError = true; }
+      else el.classList.remove('error');
+    });
+    if (hasError) { showToast(t.toast_error, true); return; }
+
+    // Send to Formspree
+    const formData = new FormData();
+    formData.append('Name', name);
+    formData.append('Phone', phone);
+    formData.append('Product', product);
+    formData.append('Requirement', req);
+    formData.append('Source', 'Modal Form');
+
+    fetch('https://formspree.io/f/meojowla', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => {
+        if (res.ok) {
+            closeModal();
+            showToast(t.toast_success);
+        } else {
+            showToast(t.toast_error, true);
+        }
+    })
+    .catch(err => showToast('Error sending. Please try again.', true));
+  }
+
+  /* =====================================================
+     CONTACT FORM (Formspree Integration)
+  ===================================================== */
+  function handleContactSubmit() {
+    const name = document.getElementById('contactName').value.trim();
+    const phone = document.getElementById('contactPhone').value.trim();
+    const req = document.getElementById('contactReq').value.trim();
+    const t = translations[currentLang];
+
+    let hasError = false;
+    ['contactName','contactPhone','contactReq'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.style.borderColor = '#c0392b'; hasError = true; }
+      else el.style.borderColor = '';
+    });
+    if (hasError) { showToast(t.toast_error, true); return; }
+
+    // Send to Formspree
+    const formData = new FormData();
+    formData.append('Name', name);
+    formData.append('Phone', phone);
+    formData.append('Requirement', req);
+    formData.append('Source', 'Contact Form');
+
+    fetch('https://formspree.io/f/meojowla', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => {
+        if (res.ok) {
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactPhone').value = '';
+            document.getElementById('contactReq').value = '';
+            showToast(t.toast_success);
+        } else {
+            showToast(t.toast_error, true);
+        }
+    })
+    .catch(err => showToast('Error sending. Please try again.', true));
+  }
+
+  /* =====================================================
+     TOAST
+  ===================================================== */
+  function showToast(msg, isError = false) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.style.background = isError ? '#c0392b' : '#2d5a27';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  /* =====================================================
+     NAVBAR
+  ===================================================== */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  const navClose = document.getElementById('navClose');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  navClose.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+  });
+
+  // Close mobile menu on nav link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ESC closes modal
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* =====================================================
+     SCROLL ANIMATIONS
+  ===================================================== */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.cat-card, .why-card, .product-card, .seller-card, .contact-left, .contact-right, .form-card').forEach(el => {
+    el.classList.add('fade-up');
+    observer.observe(el);
+  });
+
+  /* =====================================================
+     INIT
+  ===================================================== */
+  applyTranslations();
+  updateLangButtons();
+  </script>
+</body>
+</html>
